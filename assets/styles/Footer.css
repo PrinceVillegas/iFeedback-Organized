@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* FOOTER */
+.footer {
+    background-color: #0072bc;
+    padding: 20px; 
+    text-align: center; 
+    position: static; 
+    width: 100%;
+    display: flex; 
+    justify-content: space-around; 
+    flex-wrap: wrap; 
+}
+
+.footer footer {
+    display: flex; 
+    justify-content: space-around; 
+    flex-wrap: wrap;  
+    flex: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.footer img {
+    height: 150px;
+    width: 150px;
+    filter: drop-shadow(1px 1px 5px rgb(45, 45, 45));
+}
+
+.column1, .column2, .column3, .column4 {
+    margin-top: 20px;
+}
+
+.footer ul {
+    list-style-type: none; 
+    text-align: left;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.footer li {
+    margin-top: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.column4 li {
+    cursor: default;
+}
+
+.footer hr {
+    width: 95%;
+    margin-top: 30px;
+}
+
+.footer .copyright {
+    justify-content: center; 
+    width: 100%;
+    color: white;
+    margin-top: 10px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}

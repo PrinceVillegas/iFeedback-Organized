@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*  HEX CODES:
+#ffde59 - lemon 
+#fcaf17 - california girl 
+#0072bc - french blue 
+#3998FF - light blue */
+
+/* FONTS:
+
+INTER
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+POPPINS
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+NUNITO
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal; */
+
+.logo {
+    margin-right: 15px;
+    margin-top: 30px;
+    text-align: center;
+}
+.logo img {
+    width: 10%; 
+}
+.container {
+    max-width: 90%;
+    height: 680px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 20px 20px; 
+    border: 1px solid #ccc;
+}
+.searchBarActLog{
+    width: 16%;
+    height: 38px;
+    border: 3.5px solid black;
+    border-radius: 25px;
+    margin-left: 700px;
+    font-family: "Inter", sans-serif;
+    font-weight: 600; 
+    font-size: 14px;  
+    display: flex;
+    padding: 4px;
+}  
+.search-input {
+    border: none;
+    width: 200px;
+}
+.search-input:focus, .search-input:hover {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}   
+.search-icon{
+    width: 40px;
+    height: 40px;
+    margin-top: -7px;
+}
+
+.header {
+    background: #FFD43B;
+    background-color: #FFD43B; 
+    max-width: 90%;
+    height: 90px;
+    margin: 30px auto 0;
+    padding: 20px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+    border-radius: 20px 20px 0 0; 
+    font-family: "Inter", sans-serif;
+}
+.tabsheader {
+    display: flex;
+}
+.tabs {
+  border: 2px solid black;
+  display: flex;
+  width: 20%;
+  border-radius: 30px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600; 
+  font-size: 14px;
+  margin-right: 200px;  
+}
+
+.tab {
+  padding: 10px;
+  border-right: 2px solid black;
+}
+
+.tab:last-child {
+  border-right: none;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    font-family: "Inter", sans-serif;
+    max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  }
+  
+  th, td {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    padding: 19px 25px;
+    text-align: left;
+    min-width: 50px;
+  }
+  
+  th {
+    background: white;
+    color: black;
+  }
+.dropdown, .view-container {
+    padding: 5px;
+}
+
+.dropdown, .escalate-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 10;
+    padding: 10px;
+}
+.dropdown-button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.dropdown button, .escalate-menu label {
+    display: block;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.dropdown button:hover, .escalate-menu label:hover {
+    background: #f0f0f0;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+    width: 700px;
+    height: 58%;
+    z-index: 100;
+}
+.modal-header {
+    background: #FFD43B;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+}
+.modal-content {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+}
+.modal-footer {
+    text-align: right;
+    padding: 10px;
+}
+.modal button {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 90%;
+
+}
+
+#active {
+    background-color: #3998FF; 
+    color: white;
+}

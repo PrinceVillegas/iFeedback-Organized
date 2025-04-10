@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* SIDEBAR */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F5F7FB;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 90px; 
+    height: 100vh;
+    z-index: 1;
+    background-color: #ffde59;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: width 0.3s ease; 
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer; 
+}
+
+.sidebar.open {
+    width: 260px; 
+}
+
+#avatar-container {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#avatar img {
+    width: 70px; 
+    height: 70px;
+    transition: width 0.3s ease, height 0.3s ease;
+    margin-bottom: -25px;
+}
+
+.sidebar.open #avatar img {
+    width: 200px; 
+    height: 200px;
+}
+
+#studentInfo {
+    opacity: 0; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    height: 0; 
+    transition: opacity 0.3s ease, height 0.3s ease; 
+}
+
+.sidebar.open #studentInfo {
+    opacity: 1; 
+    height: auto; 
+
+}
+
+#studentName {
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: -5px;
+    margin-top: 5px;
+}
+
+#studentSection {
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.hidden-hr {
+    width: 85%;
+    border: 1px solid black;
+    opacity: 0;
+    margin: 0 auto;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar.open .hidden-hr {
+    opacity: 1; 
+}
+
+/* SIDEBAR MENU */
+.sidebar ul {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    list-style: none;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start; 
+    width: 100%;
+}
+
+.sidebar ul li {
+    margin-top: 5px;
+    line-height: 1;
+    padding: 10px 20px;
+    width: 100%;
+    transition: 0.3s ease;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    padding-left: 9px;
+}
+
+.sidebar.open ul li:nth-child(-n+7) {
+    padding-left: 40px;
+    transition: 0.3s ease;
+}
+
+.sidebar.open #sidebarIconContainer {
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+
+.sidebar ul li.open{
+    background: #3998FF;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#sidebarIconContainer li:hover  {
+    background: #3998FF;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#sidebarIconContainer li:hover span{
+    color: white;
+}
+
+.sidebar ul li.open a {
+    color: white;
+}
+
+.icon {
+    font-size: 35px;
+    margin-right: 0; 
+    transition: margin-right 0.3s ease;
+}
+
+.textIcon {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 21px;
+    opacity: 0; 
+    transition: opacity 0.3s ease, margin-left 0.3s ease;
+    margin-left: -100%; 
+}
+.sidebar.open .icon {
+    margin-right: 10px; 
+}
+
+.sidebar.open .textIcon {
+    opacity: 1; 
+    margin-left: 0; 
+}
+.sidebar ul li:last-child {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.sidebar ul li.active {
+    background-color: #3998FF; 
+    color: white;
+}
+
+.sidebar ul li.active a {
+    color: white; 
+}

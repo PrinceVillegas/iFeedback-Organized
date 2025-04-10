@@ -1,0 +1,442 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*  HEX CODES:
+#ffde59 - lemon 
+#fcaf17 - california girl 
+#0072bc - french blue 
+#3998FF - light blue */
+
+/* FONTS:
+
+INTER
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+POPPINS
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+NUNITO
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal; */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body {
+    background-color: #f5f7fb;
+    margin: 0;
+    padding: 0;
+}
+
+::backdrop {
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.main-content {
+    margin: 20px 0 0 0;
+    padding: 0;
+}
+
+.main-content {
+    margin-left: 90px; /* Adjust this value based on sidebar width */
+    transition: margin-left 0.5s
+}
+
+.sidebar.open + .main-content {
+    margin-left: 240px; /* Adjust this value based on sidebar expanded width */
+}
+
+/* OVERVIEW */
+.overviewgg {
+    padding: 8px;
+    width: 72%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#slider {
+    margin-left: 10px;
+    width: 6%;
+    height: 8%;
+}
+
+.usergreetings h3 {
+    font-weight: bold;
+    font-size: 32px;
+    margin-top: 8px;
+
+}
+.usergreetings p {
+    color: #737373;
+    margin-top: -8px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    margin-bottom: 2%;
+}
+
+.PNA-container {
+    display: flex;
+    gap: 30px; 
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 13px;
+    margin-right: 0px;
+}
+.PNA-container .box {
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    height: 100px;
+    background-color: rgb(213, 222, 224);
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding-left: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: width 0.5s ease;
+}
+
+.PNA-container #box1, #box2, #box3 {
+    background-color: white; 
+    width: 400px;
+    font-size: 20px;
+    border-radius: 20px;
+}
+
+
+.PNA-container .circle {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #b1aeb7;
+    font-size: 16px;
+    margin-right: 10px;
+    margin-left: 10px 
+}
+.PNA-container .circle-1 {
+    background-color: #00bf63;
+    opacity: 60%;
+}
+.PNA-container .circle-2 {
+    background-color: #7ed957;
+    opacity: 60%;
+}
+.PNA-container .circle-3 {
+    background-color: #d9d9d9;
+    opacity: 50%
+}
+
+.circle-text {
+    color: #737373;
+    margin-top: 6px;
+    font-family: "Inter", sans-serif;
+}
+.circle-text h6 {
+    margin-top: -50px;
+    font-size: 18px;
+    font-weight: 400;
+    color: #737373;
+    padding-top: 30px;
+    
+}
+
+/* COUNTDOWN */
+.countdowngg {  
+    display: flex; 
+    justify-content: flex-end;
+    margin-top: -200px ;
+    margin-right: 40px;
+}
+.countdown-container {
+    text-align: center;
+    border-radius: 20px;
+    width: 26%;
+    padding: 16px;
+    margin-top: -20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.countdown-text {
+    text-align: center;
+}
+.countdown-text h3 {
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 30px;
+    font-family: "Inter", sans-serif;
+}
+
+.countdown-text p {
+  font-size: 16px;
+  margin-top: -5px;
+  color: #737373;
+  font-family: "Inter", sans-serif;
+
+}
+.countdown-timer .colon {
+    font-weight: bold;
+    padding: 0px;
+    font-size: 30px;
+    position: relative;
+    bottom: 30px;
+    margin: -6px;
+}
+
+.custom-border {
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.countdown-label {
+    color: black;
+}
+
+.custom-border.finished {
+    border: 2px solid #3998FF;
+    border-radius: 10px;
+}
+
+.countdown-label.finished {
+    color: #3998FF;
+}
+
+.countdown-container li {
+    display: inline-block;
+    font-size: 12px;
+    list-style-type: none;
+    padding:  5px;
+}
+
+.countdown-container li span {
+    display: block;
+    font-size: 30px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.countdownstartbtn {
+    text-transform: uppercase;
+    background-color: #b1aeb7;
+    border-radius: 40px;
+    color: white; 
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    margin-top: 0px;
+    width: 140px;
+    border: none;
+    font-family: "Inter", sans-serif;
+    cursor: none;   
+    pointer-events: none;
+}
+
+.countdownstartbtn.enabled {
+    background-color: #3998FF;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.countdownstartbtn.enabled img {
+    margin-top: -3px;
+}
+
+
+/** LINE GRAPH */
+.graph-container {
+    margin-top: -30px;
+    padding-left: 30px;
+    padding-top: 30px;
+    background-color: white;
+    border-radius: 20px;
+    height: 400px;
+    width: 70%;
+    margin-left: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: "Inter", sans-serif;
+
+}
+.graph-header {
+    display: flex;
+}
+.graph-header h5 {
+    color: #545454;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+}
+.graph-header h3 {
+    font-size: 36px;
+    display: flex;
+    margin-left: 87%;
+    margin-top: -10px;
+    height: 10px;
+    color: #545454;
+    font-family: "Inter", sans-serif;
+}
+
+.strand-container  {
+    text-align: center;
+    margin-left: 30px;
+    display: flex;
+    gap: 82px;
+    justify-content: center;
+    color: #545454;
+}
+.layers {
+    display: flex;
+    margin-top: 33px;
+    padding-left: 20px;
+    color: #545454;
+}
+.layers hr {
+    margin: 10px;
+    width: 94%;
+}
+
+/*  TOP RATED INSTRUCTORS */
+.topRatedInstructors-containergg {
+    background-color: white;
+    border-radius: 20px;
+    justify-content: flex-end;
+    display: flex;
+    margin-top: -346px;
+    margin-left: 74%;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 24%;
+    height: auto;
+    overflow: auto;
+}
+
+.topRatedInstructors-container {
+    width: 400px;
+    justify-content: center;
+    height: 348px; 
+    border-radius: 20px;
+    padding: 30px;
+    padding-right: 5px;
+    margin-right: 15px;
+    margin-top: -20px;
+    margin-left: -10px;
+}
+
+.topRatedInstructors-container h2 {
+    text-align: left;
+    font-size: 24px; 
+    margin-bottom: 12px;
+    color: #545454;
+    font-weight: bold;
+}
+
+.table-header,
+.table-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 0; 
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.table-header p {
+    color: gray; 
+    margin-bottom: -5px;
+    font-family: "Inter", sans-serif;
+}
+
+
+.table-row {
+    margin-bottom: -18px;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-row .rank {
+    font-size: 30px;
+    font-weight: bold;
+    color: #545454;
+}
+
+.table-row .ratings {
+    font-weight: bold;
+    font-size: 18px; 
+    color: #333;
+}
+
+.instructor-info {
+    display: flex;
+    align-items: center;
+    
+}
+
+.instructor-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.instructor-info p {
+    font-size: 0.85em;
+    color: #333;
+}
+
+.rating-star {
+    color: #f39c12;
+    font-size: 18px;
+    margin-left: 3px;
+}
+
+/* CHANNEL */
+.channel-container {
+    display: flex;
+    justify-content: space-around;
+    margin-left: 165px;
+    margin-top: -26px;
+    gap: 90px;
+}
+
+.channel-containergg h5 {
+    margin-left: 60px;
+    margin-top: 20px;
+    margin-bottom: -10px;
+    color: #545454;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+}
+
+#channel1img, #channel2img, #channel3img, #channel4img {
+    border-radius: 20px;
+    height: 220px;
+    width: 360px;
+    margin-top: 40px;
+    margin-left: -240px;
+    margin-right: -100px;
+    margin-bottom: 20px;
+}
+
+#channel1img:hover {
+    cursor: pointer;
+}
+.countdownstartbtn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

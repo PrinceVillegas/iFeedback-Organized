@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Didact+Gothic&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* LOGIN */
+
+.Login {
+    border-color: black;
+    border-radius: 10px;
+    border-width: 3px;
+    height: 60%;
+    width: 30%;
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.btnCloseLogin {
+    background: none;
+    border: none;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.Login h1 {
+    margin-top: 10px;
+    margin-left: 60px;
+    font-weight: 600;
+}
+
+.Login h5 {
+    color: #737373;
+    margin-top: 5px;
+    margin-left: 60px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.containerLogin {
+    margin-top: 30px;
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.containerLogin input[type="text"],
+.containerLogin input[type="password"] {
+    margin-top: 5px;
+    display: block;
+    border-radius: 10px;
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border: 2px solid #737373;
+    font-size: 16px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.containerLogin label {
+    font-weight: 700;
+}
+
+.containerLogin input[type="checkbox"] {
+    margin-right: 5px;
+    margin-left: 20px;
+}
+
+.RMFG a {
+    margin-left: 140px;
+    color: #2682FF;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.containerLogin .btn {
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    background-color: #3998ff;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    height: 40px;
+    width: 30%;
+    margin-top: 30px;
+}
+
+.containerLogin:hover .btn {
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    background-color: #3998ff;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    height: 40px;
+    width: 30%;
+    margin-top: 30px;
+}
+
+#DHAA {
+    margin-top: 20px;
+}
+
+#DHAA p {
+    color: #737373;
+    font-weight: 600;
+}
+
+#DHAA a {
+    color: #3998ff;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 10px;
+}
