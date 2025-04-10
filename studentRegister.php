@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include ("connect.php");
 
 
@@ -46,8 +46,28 @@ if(isset($_POST['signUp'])){
         echo "<script>alert('Password does not match!');</script>";
     }
 }
+if(isset($_POST['login'])){
+    $username=$_POST['username'];
+    $password=$_POST['password'];
+    $password=md5($password);
 
 
+    // Check if user is a regular user
+    $sql="SELECT * FROM studentstbl WHERE username='$username' AND password='$password'";
+    $result=$conn->query($sql);
+    if($result->num_rows > 0){
+        session_start();
+        $row=$result->fetch_assoc();
+        $_SESSION['username']=$row['username'];
+        $_SESSION['role']='studenstbl';
+        header("location: studentDashboard.php");
+        exit();
+    }
+    else{
+        echo "<script>alert('Username or password is incorrect!');</script>";
+    }
+}
+/*
 if(isset($_POST['login'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -62,16 +82,7 @@ if(isset($_POST['login'])){
             $_SESSION['username'] = $row['username'];
             $_SESSION['studentID'] = $row['studentID'];
             $_SESSION['section'] = $row['section'];
-            $_SESSION['role'] = 'studenstbl';
 
-            // Retrieve the user's activity data from the table
-            $activityQuery = "SELECT * FROM user_activity WHERE studentID='".$_SESSION['studentID']."'";
-            $activityResult = $conn->query($activityQuery);
-            $activityData = array();
-            while($activityRow = $activityResult->fetch_assoc()){
-                $activityData[] = $activityRow;
-            }
-            $_SESSION['activityData'] = $activityData;
             header("location: studentDashboard.php");
             exit;
         } else {
@@ -79,7 +90,7 @@ if(isset($_POST['login'])){
         }
     }
 }
-
+*/
 // Create a table to store the user's activity data
 $conn->query("CREATE TABLE IF NOT EXISTS user_activity (
     id INT AUTO_INCREMENT PRIMARY KEY,

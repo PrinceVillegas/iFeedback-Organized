@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("connect.php");
 
 $query1 = "CREATE TABLE IF NOT EXISTS studentstbl (
@@ -94,8 +95,6 @@ $result = $conn->query($query);
                     <label for="password">PASSWORD</label>
                     <input type="password" name="password" id="password" placeholder="Enter your password"> 
                 </div>
-        
-                <!-- Remember Me / Forgot Password -->
                 <div class="RMFG">
                     <input type="checkbox" id="remember-me">
                     <label for="remember-me">Remember Me</label>
@@ -105,8 +104,6 @@ $result = $conn->query($query);
                 <div class="d-flex justify-content-center">
                     <input type="submit" class="btn" value="LOGIN" name="login">
                 </div>
-        
-                <!-- Don't Have an Account / Sign Up -->
                 <div class="d-flex justify-content-center" id="DHAA">
                     <p>Don't have an account?</p>
                     <a class="loginToSignUp" onclick="loginToSignUp()">Sign Up</a>

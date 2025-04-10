@@ -130,7 +130,7 @@
                 </div>
 
               
-                <form id="ratingForm" action="save_rating.php" method="post">      
+                <form id="ratingForm" action="studentSaveRating.php" method="post">      
                    <input type="hidden" id="instructorName" name="instructorName" value="<?php echo $instructorName; ?>">
                     <input type="hidden" name="studentID" value="<?php echo $_SESSION['studentID']; ?>">
                     <input type="hidden" name="section" value="<?php echo $_SESSION['section']; ?>">

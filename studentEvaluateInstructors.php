@@ -102,7 +102,7 @@
                  <h1>Evaluate an Instructor</h1>
              </div>
 
-                 <form action="feedback.php" method="post" id="instructorForm">
+                 <form action="studentFeedback.php" method="post" id="instructorForm">
                      <input type="hidden" name="instructorId" id="instructorId">
                      <div id="instructors-container">
                         <div class="instructors-cards">
