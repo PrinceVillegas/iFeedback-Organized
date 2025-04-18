@@ -1,19 +1,18 @@
 <?php
 session_start();
 include("connect.php");
-
 $query1 = "CREATE TABLE IF NOT EXISTS studentstbl (
     id INT PRIMARY KEY AUTO_INCREMENT,
     firstName VARCHAR(255),
     middleName VARCHAR(255),
     surname VARCHAR(255),
-    section VARCHAR(255),
-    studentID VARCHAR(255),
+    sectionId INT,
+    studentId VARCHAR(255),
     username VARCHAR(255),
     password VARCHAR(255),
-    evalStatus INT DEFAULT 0 CHECK (evalStatus IN (0, 1))
+    evalStatus INT DEFAULT 0 CHECK (evalStatus IN (0, 1)),
+    FOREIGN KEY (sectionID) REFERENCES sectiontbls(sectionId)
 )";
-
 $conn->query($query1);
 
 $query2 = "CREATE TABLE IF NOT EXISTS sectiontbls (
@@ -146,11 +145,18 @@ $result = $conn->query($query);
                         $result = $conn->query($query);
                         if ($result && $result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                echo '<option value="' . htmlspecialchars($row["sectionName"]) . '">' . htmlspecialchars($row["sectionName"]) . '</option>';
+                                echo '<option value="' . htmlspecialchars($row["sectionId"]) . '">' . htmlspecialchars($row["sectionName"]) . '</option>';
                             }
                         }
                         ?>
                     </select>
+                    <input type="hidden" name="sectionID" id="sectionID" value="">
+                    
+                    <script>
+                        document.getElementById("section").addEventListener("change", function() {
+                            document.getElementById("sectionID").value = this.value;
+                        });
+                    </script>
                     <span id="section-error" class="gray-text" style="display: none;">*Please select your section</span>
                 </div>
                <div class="signUpStudentID">

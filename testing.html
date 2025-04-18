@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        .custom-border {
+            display: inline-block;
+            min-width: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- COUNTDOWN -->
+    <div class="countdowngg">
+        <div class="countdown-container">
+            <div class="countdown-text">
+                <h3>Countdown</h3>
+                <p>Your next feedback begins in...</p>
+            </div>
+            <div id="countdown">
+                <ul class="countdown-timer" style="list-style: none; display: flex; gap: 10px; padding: 0;">
+                    <li><span class="custom-border" id="days">00</span><p class="countdown-label">Days</p></li>
+                    <li class="colon">:</li>
+                    <li><span class="custom-border" id="hours">00</span><p class="countdown-label">Hours</p></li>
+                    <li class="colon">:</li>
+                    <li><span class="custom-border" id="minutes">00</span><p class="countdown-label">Minutes</p></li>
+                    <li class="colon">:</li>
+                    <li><span class="custom-border" id="seconds">00</span><p class="countdown-label">Seconds</p></li>
+                </ul>
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="countdownstartbtn" type="button" id="start-btn">
+                        <img src="assets/svg/Lock.svg" alt="Lock Icon" width="24" height="24">
+                        Start
+                    </button>
+                </div>
+            </div>
+            <div class="countdown-settings">
+                <label for="countdown-date">Date:</label>
+                <input type="date" id="countdown-date">
+                <label for="countdown-time">Time:</label>
+                <input type="time" id="countdown-time">
+                <button class="countdown-setbtn" type="button" id="set-btn">Set Countdown</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Declare variables
+        let remainingTime;
+        let countdownInterval;
+
+        // Populate date and time inputs with current time
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        const day = now.getDate();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+
+        document.getElementById('countdown-date').value = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        document.getElementById('countdown-time').value = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+
+        const countdownDateInput = document.getElementById('countdown-date');
+        const countdownTimeInput = document.getElementById('countdown-time');
+        const setButton = document.getElementById('set-btn');
+
+        // Countdown logic
+        function updateCountdown() {
+            if (remainingTime <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(remainingTime / (60 * 60 * 24));
+            const hours = Math.floor((remainingTime % (60 * 60 * 24)) / (60 * 60));
+            const minutes = Math.floor((remainingTime % (60 * 60)) / 60);
+            const seconds = Math.floor(remainingTime % 60);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            remainingTime--;
+        }
+
+        setButton.addEventListener('click', () => {
+            const countdownDate = new Date(countdownDateInput.value + 'T' + countdownTimeInput.value + ':00');
+            const now = new Date();
+            const countdownDuration = countdownDate.getTime() - now.getTime();
+
+            if (countdownDuration <= 0) {
+                alert("Please choose a future date and time.");
+                return;
+            }
+
+            clearInterval(countdownInterval); // clear any previous countdown
+            remainingTime = Math.floor(countdownDuration / 1000);
+            updateCountdown(); // initial call
+            countdownInterval = setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>

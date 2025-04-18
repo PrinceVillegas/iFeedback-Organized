@@ -2,15 +2,17 @@
     session_start();
     include("connect.php");
 
-    $instructor_username = $_SESSION['instructor_username'];
+    // Assuming you set the instructorEmail as a session variable earlier
+    $instructorEmail = $_SESSION['instructorEmail'];
 
-    $query = "SELECT * FROM Instructorstbl WHERE instructor_username = '$instructor_username'";
+    $query = "SELECT * FROM instructorstbl WHERE instructorEmail = '$instructorEmail'";
     $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
         $instructor_row = $result->fetch_assoc();
-        $instructor_username = $instructor_row['instructor_username'];
-        $instructor_department = $instructor_row['department'];
+        $instructorFullName = $instructor_row['instructorFullName'];
+        // You can set the instructorFullName as a session variable here
+        $_SESSION['instructorFullName'] = $instructorFullName;
     } else {
         echo "No data found";
     }
@@ -44,8 +46,7 @@
                     <img src="assets/svg/Instructor Avatar.svg">
                 </div>
                 <div class="d-inline justify-content-center text-center" id="studentInfo">
-                    <p id="IName"><?php echo $instructor_username; ?></p>
-                    <p id="instructorDepartment"><?php echo $instructor_department; ?></p>
+                    <p id="IName"><?php echo $instructorFullName; ?></p>
                 </div>
                 <div class="justify-content-center">
                     <hr class="hidden-hr">
@@ -79,7 +80,7 @@
             <img id="slider" src="assets/svg/Icon Only.svg"  style="float: left; margin-right: 10px; margin-bottom: 5px;" />
             <div>
                 <div class="usergreetings">
-                    <h3>Hello, <?php echo $instructor_username ?></h3>
+                    <h3>Hello, <?php echo $instructorFullName; ?></h3>
                     <p>With Transparency, We Guarantee.</p>
                 </div>
             </div>

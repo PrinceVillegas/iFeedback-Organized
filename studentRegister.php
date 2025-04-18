@@ -11,7 +11,7 @@ if(isset($_POST['signUp'])){
     $firstName = $_POST['firstName'];
     $middleName = $_POST['middleName'];
     $surname = $_POST['surname'];
-    $section = $_POST['section'];
+    $section = $_POST['sectionID'];
     $studentID = $_POST['studentID'];
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -21,10 +21,13 @@ if(isset($_POST['signUp'])){
         $checkUsername = "SELECT * FROM studentstbl WHERE username='$username'";
         $result = $conn->query($checkUsername);
         if($result->num_rows > 0){
-            echo "<script>alert('Username already exist! Try again!');</script>";
+            echo "<script>alert('Username already exists! Try again!');</script>";
         } else {
-            $password = password_hash($password, PASSWORD_DEFAULT);
-            $insertQuery = "INSERT INTO studentstbl (firstName, middleName, surname, section, studentID, username, password, evalStatus)
+            // Hash the password using MD5 (Note: MD5 is not recommended for security)
+            $password = md5($password);
+            
+            // Insert the user data with the MD5 hashed password
+            $insertQuery = "INSERT INTO studentstbl (firstName, middleName, surname, sectionId, studentId, username, password, evalStatus)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($insertQuery);
             if ($stmt === false) {
@@ -46,6 +49,7 @@ if(isset($_POST['signUp'])){
         echo "<script>alert('Password does not match!');</script>";
     }
 }
+
 if(isset($_POST['login'])){
     $username=$_POST['username'];
     $password=$_POST['password'];

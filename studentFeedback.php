@@ -1,38 +1,59 @@
 <?php
-    session_start();
-    include("connect.php");
-    include("auth.php");
+session_start();
+include("connect.php");
+include("auth.php");
 
-    $username = $_SESSION['username'];
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
 
-    $query = "SELECT * FROM studentstbl WHERE username = '$username'";
-    $result = $conn->query($query);
+$username = $_SESSION['username'];
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-    } else {
-        echo "No data found";
-    }
+// Fetch student data
+$stmt = $conn->prepare("SELECT * FROM studentstbl WHERE username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$student = $result->fetch_assoc();
 
-    if (isset($_SESSION['username'])) {
-        $stmt = $conn->prepare("SELECT instructor_username FROM instructorstbl WHERE instructorID = ?");
-        $stmt->bind_param("i", $_POST['instructorId']);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $instructorName = $result->fetch_assoc()['instructor_username'];
-        $stmt->close(); 
-    }
+if (!$student) {
+    echo "No student data found.";
+    exit();
+}
 
-    $stmt = $conn->prepare("SELECT studentID, section FROM studentstbl WHERE username = ?");
-    $stmt->bind_param("s", $_SESSION['username']);
+// Store student ID and sectionId in session (if not already stored)
+$_SESSION['studentID'] = $student['studentId'];
+$_SESSION['sectionId'] = $student['sectionId'];
+
+// Get instructorId from query parameter
+$instructorId = isset($_GET['instructorId']) ? (int)$_GET['instructorId'] : null;
+
+$instructorName = '';
+if ($instructorId) {
+    $stmt = $conn->prepare("SELECT instructorFullName FROM instructorstbl WHERE instructorId = ?");
+    $stmt->bind_param("i", $instructorId);
     $stmt->execute();
     $result = $stmt->get_result();
-    $studentData = $result->fetch_assoc();
-    $studentID = $studentData['studentID'];
-    $section = $studentData['section'];
-    $_SESSION['studentID'] = $studentID;
-    $_SESSION['section'] = $section;
-    ?>
+    
+    if ($result->num_rows > 0) {
+        $instructor = $result->fetch_assoc();
+        $instructorName = $instructor['instructorFullName'];
+    } else {
+        echo "Instructor not found.";
+        exit();
+    }
+} else {
+    echo "No instructor selected.";
+    exit();
+}
+
+// Optional: Generate a CSRF/rating token
+$token = bin2hex(random_bytes(16));
+$_SESSION['ratingToken'] = $token;
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -131,10 +152,12 @@
 
               
                 <form id="ratingForm" action="studentSaveRating.php" method="post">      
-                   <input type="hidden" id="instructorName" name="instructorName" value="<?php echo $instructorName; ?>">
-                    <input type="hidden" name="studentID" value="<?php echo $_SESSION['studentID']; ?>">
-                    <input type="hidden" name="section" value="<?php echo $_SESSION['section']; ?>">
-                    <input type="hidden" name="token" value="<?php echo $token; ?>">
+                <input type="text" name="instructorId" value="<?php echo $instructorId; ?>">
+                <input type="text" name="studentID" value="<?php echo $_SESSION['studentID']; ?>">
+                <input type="text" name="sectionId" value="<?php echo $_SESSION['sectionId']; ?>"> <!-- Updated to sectionId -->
+                <input type="text" name="token" value="<?php echo $token; ?>">
+
+
                 <div class="question1">
                         <div class="questionrow1">
                             <h5>1</h5>

@@ -1,71 +1,113 @@
 <?php
-    session_start();
-    include("connect.php"); // Include the database connection code
+session_start();
+include("connect.php");
 
-    if(isset($_POST['login'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $password = md5($password);
+// === 1. Create instructorstbl ===
+$query1 = "CREATE TABLE IF NOT EXISTS instructorstbl (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    instructorId BIGINT NOT NULL UNIQUE,
+    instructorEmail VARCHAR(255) NOT NULL UNIQUE,
+    instructorFullName VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+)";
+$conn->query($query1);
 
-        // Create instructorstbl table if it doesn't exist
-        $query = "SHOW TABLES LIKE 'instructorstbl'";
-        $result = $conn->query($query);
-        
-        if ($result->num_rows == 0) {
-            $createInstructorTableQuery = "
-                CREATE TABLE instructorstbl (
-                    instructorID INT,
-                    instructor_username VARCHAR(255),
-                    password VARCHAR(255),
-                    department VARCHAR(255),
-                    PRIMARY KEY (instructorID)
-                )";
-            $conn->query($createInstructorTableQuery);
-        }
-        
-        // Insert data into instructorstbl if table is empty
-        $password1 = md5('password1');
-        $password2 = md5('password2');
-        $password3 = md5('password3');
-        $password4 = md5('password4');
-        $password5 = md5('password5');
-        $password6 = md5('password6');
-        $password7 = md5('password7');
-        $password8 = md5('password8');
-        $password9 = md5('password9');
-        
-        $query = "SELECT * FROM instructorstbl WHERE instructorID = 1";
-        $result = $conn->query($query);
-        
-        if ($result->num_rows == 0) {
-            $insertInstructorDataQuery = "INSERT INTO instructorstbl (instructorID, instructor_username, password, department)
-            VALUES
-                (1, 'Instructor1', '$password1', 'Tourism and Management'),
-                (2, 'Instructor2', '$password2', 'IT'),
-                (3, 'Instructor3', '$password3', 'English'),
-                (4, 'Instructor4', '$password4', 'English'),
-                (5, 'Instructor5', '$password5', 'Social Science'),
-                (6, 'Instructor6', '$password6', 'IT'),
-                (7, 'Instructor7', '$password7', 'IT'),
-                (8, 'Instructor8', '$password8', 'Tourism and Management'),
-                (9, 'Instructor9', '$password9', 'Filipino')";
-            $conn->query($insertInstructorDataQuery);
-        }
-        
-        // Authenticate user
-        $sql = "SELECT * FROM instructorstbl WHERE instructor_username='$username' AND password='$password'";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $_SESSION['instructor_username'] = $row['instructor_username'];
+// === 2. Insert 15 instructors manually ===
+$manualInstructors = [
+    [11111111111, 'Instructor1@gmail.com', 'John Smith'],
+    [11111111112, 'Instructor2@gmail.com', 'Jane Doe'],
+    [11111111113, 'Instructor3@gmail.com', 'Michael Brown'],
+    [11111111114, 'Instructor4@gmail.com', 'Emily Chen'],
+    [11111111115, 'Instructor5@gmail.com', 'David Lee'],
+    [11111111116, 'Instructor6@gmail.com', 'Sarah Taylor'],
+    [11111111117, 'Instructor7@gmail.com', 'Kevin White'],
+    [11111111118, 'Instructor8@gmail.com', 'Rebecca Hall'],
+    [11111111119, 'Instructor9@gmail.com', 'James Martin'],
+    [11111111120, 'Instructor10@gmail.com', 'Olivia Harris'],
+    [11111111121, 'Instructor11@gmail.com', 'Ethan Clark'],
+    [11111111122, 'Instructor12@gmail.com', 'Natalie Wright'],
+    [11111111123, 'Instructor13@gmail.com', 'Daniel Walker'],
+    [11111111124, 'Instructor14@gmail.com', 'Chloe Adams'],
+    [11111111125, 'Instructor15@gmail.com', 'Liam Turner'],
+];
+
+$hashedPassword = password_hash('password1', PASSWORD_DEFAULT);
+$stmt = $conn->prepare("
+    INSERT INTO instructorstbl (instructorID, instructorEmail, instructorFullName, password)
+    VALUES (?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE instructorFullName = VALUES(instructorFullName)
+");
+foreach ($manualInstructors as $instructor) {
+    $stmt->bind_param("isss", $instructor[0], $instructor[1], $instructor[2], $hashedPassword);
+    $stmt->execute();
+}
+$stmt->close();
+
+// === 3. Handle login ===
+if (isset($_POST['login'])) {
+    $username = $_POST['email'];
+    $password = $_POST['password'];
+
+    $stmt = $conn->prepare("SELECT * FROM instructorstbl WHERE instructorEmail = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['instructorEmail'] = $row['instructorEmail'];
             $_SESSION['role'] = 'instructor';
-            header("location: instructorDashboard.php");
+            header("Location: instructorDashboard.php");
             exit();
         } else {
-            echo "Invalid username or password.";
+            echo "<script>alert('Incorrect password.');</script>";
         }
+    } else {
+        echo "<script>alert('No account found with that email.');</script>";
     }
+    $stmt->close();
+}
+
+// === 4. Create sectiontbls and insert sections ===
+$query2 = "CREATE TABLE IF NOT EXISTS sectiontbls (
+    sectionId INT AUTO_INCREMENT PRIMARY KEY,
+    sectionName VARCHAR(100) NOT NULL UNIQUE,
+    sectionDescription VARCHAR(500) DEFAULT 'No description provided'
+)";
+$conn->query($query2);
+
+$checkSections = $conn->query("SELECT COUNT(*) as count FROM sectiontbls");
+$row = $checkSections->fetch_assoc();
+if ($row['count'] == 0) {
+    $insertSections = "
+        INSERT INTO sectiontbls (sectionName, sectionDescription) VALUES
+        ('ABM101A', 'Accountancy, Business, Management'),
+        ('ABM201A', 'Accountancy, Business, Management'),
+        ('CULART101A', 'Culinary Arts'),
+        ('CULART201A', 'Culinary Arts'),
+        ('HUMSS201A', 'Humanities and Social Sciences'),
+        ('ICTE101A', 'Information and Communications Technology'),
+        ('ICTE102A', 'Information and Communications Technology'),
+        ('ICTE201A', 'Information and Communications Technology'),
+        ('ICTE202P', 'Information and Communications Technology Practical'),
+        ('TOPE101A', 'Technology and Engineering Principles'),
+        ('TOPE201A', 'Technology and Engineering Principles')
+    ";
+    $conn->query($insertSections);
+}
+
+
+$query3 = "CREATE TABLE IF NOT EXISTS classroomstbl (
+    classroomId INT AUTO_INCREMENT PRIMARY KEY,
+    instructorId BIGINT,
+    sectionId INT,
+    FOREIGN KEY (instructorId) REFERENCES instructorstbl(instructorId),
+    FOREIGN KEY (sectionId) REFERENCES sectiontbls(sectionId)
+)";
+$conn->query($query3);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -105,8 +147,8 @@
             <div class="containerLogin">
                 <form action="" method="post" class="loginForm">
                     <div class="loginUN">
-                        <label for="username">USERNAME</label>
-                        <input type="text" name="username" id="username" placeholder="Enter your username">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="username" placeholder="Enter your Email">
                     </div>
             
                     <div class="loginPW">
