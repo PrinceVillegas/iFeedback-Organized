@@ -8,11 +8,11 @@ $query1 = "CREATE TABLE IF NOT EXISTS instructorstbl (
     instructorId BIGINT NOT NULL UNIQUE,
     instructorEmail VARCHAR(255) NOT NULL UNIQUE,
     instructorFullName VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    instructorDepartment VARCHAR(255) NOT NULL
 )";
 $conn->query($query1);
 
-// === 2. Insert 15 instructors manually ===
 $manualInstructors = [
     [11111111111, 'Instructor1@gmail.com', 'John Smith'],
     [11111111112, 'Instructor2@gmail.com', 'Jane Doe'],

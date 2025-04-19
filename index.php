@@ -42,6 +42,36 @@ $conn->query($insertQuery);
 $query = "SELECT sectionId, sectionName FROM sectiontbls"; 
 $result = $conn->query($query);
 
+
+$usernameError = "";
+$passwordError = "";
+
+// Login handler
+if (isset($_POST['login'])) {
+    $username = trim($_POST['username']);
+    $passwordInput = $_POST['password'];
+    $password = md5($passwordInput); // Note: consider upgrading to password_hash later for better security
+
+    $checkUser = $conn->prepare("SELECT * FROM studentstbl WHERE username = ?");
+    $checkUser->bind_param("s", $username);
+    $checkUser->execute();
+    $result = $checkUser->get_result();
+
+    if ($result->num_rows === 0) {
+        $usernameError = "*Username does not exist";
+    } else {
+        $user = $result->fetch_assoc();
+        if ($user['password'] !== $password) {
+            $passwordError = "*Incorrect password";
+        } else {
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = 'student';
+            header("Location: studentDashboard.php");
+            exit();
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -76,40 +106,50 @@ $result = $conn->query($query);
             </div>
         </div>
     </nav>
-    <!-- Login Pop-up -->
     <dialog id="Login" class="Login">
-        <div class="d-flex justify-content-end" id="btnCloseLogin">
-            <button class="btnCloseLogin">&times;</button>
-        </div>
-        <h1>Log In</h1>
-        <h5>Please enter your details</h5>
-        <div class="containerLogin">
-            <form action="studentRegister.php" method="post" class="loginForm">
-                <div class="loginUN">
+    <div class="d-flex justify-content-end" id="btnCloseLogin">
+        <button class="btnCloseLogin">&times;</button>
+    </div>
+    <h1>Log In</h1>
+    <h5>Please enter your details</h5>
+    <div class="containerLogin">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="loginForm">
+            <div class="loginUN">
+                <div class="d-flex justify-content-between align-items-center">
                     <label for="username">USERNAME</label>
-                    <input type="text" name="username" id="username" placeholder="Enter your username">
+                    <span style="color:red;"><?php echo $usernameError; ?></span>
                 </div>
-        
-                <div class="loginPW">
+                <input type="text" name="username" id="username" placeholder="Enter your username"
+                    value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>">
+            </div>
+
+            <div class="loginPW">
+                <div class="d-flex justify-content-between align-items-center">
                     <label for="password">PASSWORD</label>
-                    <input type="password" name="password" id="password" placeholder="Enter your password"> 
+                    <span style="color:red;"><?php echo $passwordError; ?></span>
                 </div>
-                <div class="RMFG">
-                    <input type="checkbox" id="remember-me">
-                    <label for="remember-me">Remember Me</label>
-                    <a href="">Forgot Password</a>
-                </div>
-        
-                <div class="d-flex justify-content-center">
-                    <input type="submit" class="btn" value="LOGIN" name="login">
-                </div>
-                <div class="d-flex justify-content-center" id="DHAA">
-                    <p>Don't have an account?</p>
-                    <a class="loginToSignUp" onclick="loginToSignUp()">Sign Up</a>
-                </div>
-            </form>
-        </div>
-    </dialog>
+                <input type="password" name="password" id="password" placeholder="Enter your password">
+            </div>
+
+            <div class="RMFG">
+                <input type="checkbox" id="remember-me">
+                <label for="remember-me">Remember Me</label>
+                <a href="#">Forgot Password</a>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <input type="submit" class="btn" value="LOGIN" name="login">
+            </div>
+
+            <div class="d-flex justify-content-center" id="DHAA">
+                <p>Don't have an account?</p>
+                <a class="loginToSignUp" onclick="loginToSignUp()">Sign Up</a>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+
 
     <!-- Sign Up Pop-up -->
     <dialog id="SignUp" class="SignUp">
@@ -224,17 +264,20 @@ $result = $conn->query($query);
         </div>
     </div>
 
-    <!--reminder pop-up-->
-    <dialog class="reminder-popup" id="reminder-popup">
-        <div class="reminder-cointainer">
+  <!-- Reminder Pop-up -->
+  <dialog class="reminder-popup" id="reminder-popup">
+    <div class="reminder-cointainer">
         <div class="popup-icon">!</div>
         <h1 class="popup-title">REMINDER</h1>
-        <p class="popup-message d-flex justify-content-center">This web application is intended solely for research <br>
+        <p class="popup-message d-flex justify-content-center">
+            This web application is intended solely for research <br>
             purposes. All collected data will be used strictly for <br>
-            academic analysis and handled with utmost  <br> confidentiality.</p>
+            academic analysis and handled with utmost <br> confidentiality.
+        </p>
         <button class="popup-button">I UNDERSTAND</button>
-        </div>
-    </dialog>
+    </div>
+</dialog>
+
 
     <div class="footerBorder"></div>
 
@@ -295,7 +338,7 @@ $result = $conn->query($query);
                 <!-- Image -->
                 <div class="col" id="aboutUsColumn1">
                     <div class="aboutUsImage">
-                        <img src="https://picsum.photos/400/400" alt="">
+                        <img src="assets\images\GROUP 3 ALLSTAR GROUPIE.jpg" alt="">
                     </div>
                 </div>
     

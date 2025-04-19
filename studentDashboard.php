@@ -29,9 +29,10 @@ if ($result->num_rows > 0) {
     }
 } else {
     echo "No student data found";
+    exit();
 }
 
-// Now get sectionName using sectionId
+// Get sectionName using sectionId
 if ($sectionId !== null) {
     $stmt = $conn->prepare("SELECT sectionName FROM sectiontbls WHERE sectionId = ?");
     
@@ -336,81 +337,78 @@ if ($sectionId !== null) {
                 </div>
             <div>
         </dialog>
-<!-- WELL DONE POPUP -->
-<dialog id="welldonemessage">
-    <div class="welldone-position">
-        <div class="welldone-pop-up"> 
-            <div class="popup-icon"><img src="assets/svg/Well Done Icon.svg" alt=""></div>
-            <h1 class="popup-title">WELL DONE!</h1>
-            <p class="popup-message d-flex justify-content-center">
-                Well done! Thanks for taking the time to share your <br> thoughts!
-                Your feedback is greatly appreciated and <br> will be used to enhance your experience.
-            </p>
-            <button class="popup-button" id="okButton">OK</button>
+ <!-- WELL DONE POPUP -->
+ <dialog id="welldonemessage">
+        <div class="welldone-position">
+            <div class="welldone-pop-up"> 
+                <div class="popup-icon"><img src="assets/svg/Well Done Icon.svg" alt=""></div>
+                <h1 class="popup-title">WELL DONE!</h1>
+                <p class="popup-message d-flex justify-content-center">
+                    Well done! Thanks for taking the time to share your <br> thoughts!
+                    Your feedback is greatly appreciated and <br> will be used to enhance your experience.
+                </p>
+                <button class="popup-button" id="okButton">OK</button>
+            </div>
         </div>
-    </div>
-</dialog>
+    </dialog>
 
-<!-- BADGE POPUP -->
-<dialog id="FeedbackBadgeAward">
-    <div class="Feedbackbadge">
-        <div class="medal-icon">
-            <img src="assets/svg/Congrats.svg" alt="Medal Icon" id="medalIconPosition">
-        </div>
-        <h1>CONGRATS!</h1>
-        <div id="badgetextContainer">
-            <div class="badge">
-                <img src="assets/svg/Feedback Ninja Badge .svg" alt="Badge Icon">
-                <div class="text">
-                    <h3>Feedback Ninja Badge Unlocked!</h3>
-                    <p>You have mastered feedback and deliver <br> insights with speed!</p>
+    <!-- BADGE POPUP -->
+    <dialog id="FeedbackBadgeAward">
+        <div class="Feedbackbadge">
+            <div class="medal-icon">
+                <img src="assets/svg/Congrats.svg" alt="Medal Icon" id="medalIconPosition">
+            </div>
+            <h1>CONGRATS!</h1>
+            <div id="badgetextContainer">
+                <div class="badge">
+                    <img src="assets/svg/Feedback Ninja Badge .svg" alt="Badge Icon">
+                    <div class="text">
+                        <h3>Feedback Ninja Badge Unlocked!</h3>
+                        <p>You have mastered feedback and deliver <br> insights with speed!</p>
+                    </div>
+                </div>
+                <hr class="badge-hr">
+                <div class="badge">
+                    <img src="assets/svg/Communicator Badge.svg" alt="Badge Icon">
+                    <div class="text">
+                        <h3>Communicator Badge Unlocked!</h3>
+                        <p>Your respectful, focused feedback is making <br> a positive impact!</p>
+                    </div>
+                </div>
+                <hr class="badge-hr">
+                <div class="badge">
+                    <img src="assets/svg/Feedback Wizard Badge.svg" alt="Badge Icon">
+                    <div class="text">
+                        <h3>Feedback Wizard Badge Unlocked!</h3>
+                        <p>Your magical understanding of evaluation <br> has earned you this prestigious badge!</p>
+                    </div>
                 </div>
             </div>
             <hr class="badge-hr">
-            <div class="badge">
-                <img src="assets/svg/Communicator Badge.svg" alt="Badge Icon">
-                <div class="text">
-                    <h3>Communicator Badge Unlocked!</h3>
-                    <p>Your respectful, focused feedback is making <br> a positive impact!</p>
-                </div>
-            </div>
-            <hr class="badge-hr">
-            <div class="badge">
-                <img src="assets/svg/Feedback Wizard Badge.svg" alt="Badge Icon">
-                <div class="text">
-                    <h3>Feedback Wizard Badge Unlocked!</h3>
-                    <p>Your magical understanding of evaluation <br> has earned you this prestigious badge!</p>
-                </div>
-            </div>
+            <button class="button" id="badgeCloseButton" onclick="document.getElementById('FeedbackBadgeAward').close()">GREAT!</button>
         </div>
-        <hr class="badge-hr">
-        <button class="button" id="badgeCloseButton" onclick="document.getElementById('FeedbackBadgeAward').close()">GREAT!</button>
-    </div>
-</dialog>
+    </dialog>
 
-<script>
-    // Handle the popup sequence
-    window.onload = function() {
-        const wellDoneDialog = document.getElementById("welldonemessage");
-        const badgeDialog = document.getElementById("FeedbackBadgeAward");
-        const okBtn = document.getElementById("okButton");
+    <script>
+        window.onload = function () {
+            const wellDoneDialog = document.getElementById("welldonemessage");
+            const badgeDialog = document.getElementById("FeedbackBadgeAward");
+            const okBtn = document.getElementById("okButton");
 
-        // Check if the evalStatus is 1 and show the popup
-        <?php if ($evalStatus == 1): ?>
-            wellDoneDialog.showModal(); // Show Well Done popup
-        <?php endif; ?>
+            <?php if ($showPopup): ?>
+                if (wellDoneDialog) {
+                    wellDoneDialog.showModal();
+                }
+            <?php endif; ?>
 
-        // When the OK button is clicked, close the Well Done popup and show the Badge Award popup
-        if (wellDoneDialog && badgeDialog && okBtn) {
-            okBtn.onclick = function() {
-                wellDoneDialog.close(); // Close the Well Done popup
-                badgeDialog.showModal(); // Show the Badge Award popup
-            };
-        } else {
-            console.error("Popup elements not found or evalStatus is not 1.");
-        }
-    };
-</script>
+            if (okBtn && badgeDialog && wellDoneDialog) {
+                okBtn.onclick = function () {
+                    wellDoneDialog.close();
+                    badgeDialog.showModal();
+                };
+            }
+        };
+    </script>
 
 
     <!-- FOOTER -->

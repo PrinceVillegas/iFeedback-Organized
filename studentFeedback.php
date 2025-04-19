@@ -168,10 +168,10 @@ $_SESSION['ratingToken'] = $token;
 
               
                 <form id="ratingForm" action="studentSaveRating.php" method="post">      
-                <input type="text" name="instructorId" value="<?php echo $instructorId; ?>">
-                <input type="text" name="studentID" value="<?php echo $_SESSION['studentID']; ?>">
-                <input type="text" name="sectionId" value="<?php echo $_SESSION['sectionId']; ?>"> <!-- Updated to sectionId -->
-                <input type="text" name="token" value="<?php echo $token; ?>">
+                <input type="hidden" name="instructorId" value="<?php echo $instructorId; ?>">
+                <input type="hidden" name="studentID" value="<?php echo $_SESSION['studentID']; ?>">
+                <input type="hidden" name="sectionId" value="<?php echo $_SESSION['sectionId']; ?>">
+                <input type="hidden" name="token" value="<?php echo $token; ?>">
 
 
                 <div class="question1">

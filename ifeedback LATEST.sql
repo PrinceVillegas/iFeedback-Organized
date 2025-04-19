@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 08:51 AM
+-- Generation Time: Apr 19, 2025 at 03:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -125,29 +125,30 @@ CREATE TABLE `instructorstbl` (
   `instructorId` bigint(20) NOT NULL,
   `instructorEmail` varchar(255) NOT NULL,
   `instructorFullName` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `instructorDepartment` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `instructorstbl`
 --
 
-INSERT INTO `instructorstbl` (`id`, `instructorId`, `instructorEmail`, `instructorFullName`, `password`) VALUES
-(1, 11111111111, 'Instructor1@gmail.com', 'John Smith', '$2y$10$ERqmQNKJd9YecFEVA3Yxhe70XHg/i8TGEU4j2vabhdnpgW5KyzdHO'),
-(2, 11111111112, 'Instructor2@gmail.com', 'Jane Doe', '$2y$10$0bIdnXJ.5NZHFP7eTZ0gdu4hPJ8RSsVik2Sd1l7tZgqo5Ce/widKq'),
-(3, 11111111113, 'Instructor3@gmail.com', 'Michael Brown', '$2y$10$w16sXrTQN55wpGdKyRZXduT40rc0XZlT9MngzGork4LoYWCOCvVTa'),
-(4, 11111111114, 'Instructor4@gmail.com', 'Emily Chen', '$2y$10$AMec9aCf1bQeVF7X7oiolOyNV5lwv91cEQICc74Pzu/DEI8OgNPJq'),
-(5, 11111111115, 'Instructor5@gmail.com', 'David Lee', '$2y$10$vOdZ/pkmEGlX6xdksVH2DOpkM6CjTapJEF59KSH1b6U7gZI4xDX0C'),
-(6, 11111111116, 'Instructor6@gmail.com', 'Sarah Taylor', '$2y$10$4QTuJzCG55xmNjABCp5QxeFTJ8./eltELyB1S1jKBXdt5jtxZnOne'),
-(7, 11111111117, 'Instructor7@gmail.com', 'Kevin White', '$2y$10$zyozPwKAwIvkM0BUCxBk5ehSGcrOE6O5Mhyrct2rK9Uud5xyRdjRC'),
-(8, 11111111118, 'Instructor8@gmail.com', 'Rebecca Hall', '$2y$10$3roHcHfBw64jPTTEy7FOA.zPASvv9Kau7tc5e.XtadnxAxET4v.8u'),
-(9, 11111111119, 'Instructor9@gmail.com', 'James Martin', '$2y$10$JI77JMvE9fx0VxyBL.74s.oOfoDxh9p3Ex6JeIjp6o.lnxkwjbuvi'),
-(10, 11111111120, 'Instructor10@gmail.com', 'Olivia Harris', '$2y$10$4r8NcBOIvEep.sMhLwJB2.VxipvDILVMu2SMmjp2TfZJu.K9C5/h2'),
-(11, 11111111121, 'Instructor11@gmail.com', 'Ethan Clark', '$2y$10$1tgLi7R9VB2usXQrcJ24jux2YTDPpHj4PkfO8sl3OxkZrpiuFlW6G'),
-(12, 11111111122, 'Instructor12@gmail.com', 'Natalie Wright', '$2y$10$QfBB4InPHQhyEZXvE6CN7.h3c8ccVKJbYhQ5R2K99DLrmzf.dKUSO'),
-(13, 11111111123, 'Instructor13@gmail.com', 'Daniel Walker', '$2y$10$yMqq2pOrhRlPb8c4KfewBOMGLyGqO0.mAsUYb6T2up5Go7CR.Afe.'),
-(14, 11111111124, 'Instructor14@gmail.com', 'Chloe Adams', '$2y$10$i6f1EnqPlN3jacdFY9B0HO21iZ8kpWykgcLS9W7U9HZ0eOI9rVMEG'),
-(15, 11111111125, 'Instructor15@gmail.com', 'Liam Turner', '$2y$10$WnrL69/pIu9arWk0Sndf.u/A0nCDxyNOgqo6nAUPk0xSXtEpj7S2C');
+INSERT INTO `instructorstbl` (`id`, `instructorId`, `instructorEmail`, `instructorFullName`, `password`, `instructorDepartment`) VALUES
+(1, 11111111111, 'Instructor1@gmail.com', 'John Smith', '$2y$10$ERqmQNKJd9YecFEVA3Yxhe70XHg/i8TGEU4j2vabhdnpgW5KyzdHO', 'Information Technology'),
+(2, 11111111112, 'Instructor2@gmail.com', 'Jane Doe', '$2y$10$0bIdnXJ.5NZHFP7eTZ0gdu4hPJ8RSsVik2Sd1l7tZgqo5Ce/widKq', 'Information Technology'),
+(3, 11111111113, 'Instructor3@gmail.com', 'Michael Brown', '$2y$10$w16sXrTQN55wpGdKyRZXduT40rc0XZlT9MngzGork4LoYWCOCvVTa', 'Tourism Hospitality Management'),
+(4, 11111111114, 'Instructor4@gmail.com', 'Emily Chen', '$2y$10$AMec9aCf1bQeVF7X7oiolOyNV5lwv91cEQICc74Pzu/DEI8OgNPJq', 'Filipino'),
+(5, 11111111115, 'Instructor5@gmail.com', 'David Lee', '$2y$10$vOdZ/pkmEGlX6xdksVH2DOpkM6CjTapJEF59KSH1b6U7gZI4xDX0C', 'Social Science'),
+(6, 11111111116, 'Instructor6@gmail.com', 'Sarah Taylor', '$2y$10$4QTuJzCG55xmNjABCp5QxeFTJ8./eltELyB1S1jKBXdt5jtxZnOne', 'English'),
+(7, 11111111117, 'Instructor7@gmail.com', 'Kevin White', '$2y$10$zyozPwKAwIvkM0BUCxBk5ehSGcrOE6O5Mhyrct2rK9Uud5xyRdjRC', 'General Science'),
+(8, 11111111118, 'Instructor8@gmail.com', 'Rebecca Hall', '$2y$10$3roHcHfBw64jPTTEy7FOA.zPASvv9Kau7tc5e.XtadnxAxET4v.8u', 'English'),
+(9, 11111111119, 'Instructor9@gmail.com', 'James Martin', '$2y$10$JI77JMvE9fx0VxyBL.74s.oOfoDxh9p3Ex6JeIjp6o.lnxkwjbuvi', 'Physical Education'),
+(10, 11111111120, 'Instructor10@gmail.com', 'Olivia Harris', '$2y$10$4r8NcBOIvEep.sMhLwJB2.VxipvDILVMu2SMmjp2TfZJu.K9C5/h2', 'Mathematics'),
+(11, 11111111121, 'Instructor11@gmail.com', 'Ethan Clark', '$2y$10$1tgLi7R9VB2usXQrcJ24jux2YTDPpHj4PkfO8sl3OxkZrpiuFlW6G', 'Social Science'),
+(12, 11111111122, 'Instructor12@gmail.com', 'Natalie Wright', '$2y$10$QfBB4InPHQhyEZXvE6CN7.h3c8ccVKJbYhQ5R2K99DLrmzf.dKUSO', 'Filipino'),
+(13, 11111111123, 'Instructor13@gmail.com', 'Daniel Walker', '$2y$10$yMqq2pOrhRlPb8c4KfewBOMGLyGqO0.mAsUYb6T2up5Go7CR.Afe.', 'Tourism Hospitality Management'),
+(14, 11111111124, 'Instructor14@gmail.com', 'Chloe Adams', '$2y$10$i6f1EnqPlN3jacdFY9B0HO21iZ8kpWykgcLS9W7U9HZ0eOI9rVMEG', 'Physical Education'),
+(15, 11111111125, 'Instructor15@gmail.com', 'Liam Turner', '$2y$10$WnrL69/pIu9arWk0Sndf.u/A0nCDxyNOgqo6nAUPk0xSXtEpj7S2C', 'Mathematics');
 
 -- --------------------------------------------------------
 
@@ -768,7 +769,12 @@ INSERT INTO `studentratingstbl` (`id`, `instructorId`, `studentId`, `sectionId`,
 (558, 11111111117, '67890867987', 7, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 'qdwecs'),
 (559, 11111111118, '67890867987', 7, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 'fsv c'),
 (560, 11111111119, '67890867987', 7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 'waesdvx'),
-(561, 11111111120, '67890867987', 7, 3, 2, 2, 3, 2, 2, 3, 3, 2, 2, 'dwaefsvxc');
+(561, 11111111120, '67890867987', 7, 3, 2, 2, 3, 2, 2, 3, 3, 2, 2, 'dwaefsvxc'),
+(562, 11111111111, '43256787654', 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'WFESDVBC '),
+(563, 11111111112, '43256787654', 5, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 'WAEFSDXC'),
+(564, 11111111113, '43256787654', 5, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 'WADSCZ'),
+(565, 11111111114, '43256787654', 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 'WDASCZX'),
+(566, 11111111115, '43256787654', 5, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 'WQDSAC');
 
 -- --------------------------------------------------------
 
@@ -904,7 +910,8 @@ INSERT INTO `studentstbl` (`id`, `firstName`, `middleName`, `surname`, `sectionI
 (109, 'Student109', 'M109', 'Lastname', 11, '11111111219', 'user109', 'd89d5b83134cc33d728f41003d1936dc', 1),
 (110, 'Student110', 'M110', 'Lastname', 11, '11111111220', 'user110', '15e749cf8eb308259d116dbabc4836ea', 1),
 (111, 'ujyhtgrfed', 'uytredwa', 'kiujyhtgda', 4, '00000000000', '666mmmmmmmmmm', 'a01610228fe998f515a72dd730294d87', 1),
-(112, 'ujyhtgrfedewdqef', 'uytredwa3qwds', 'kiujyhtgdaqweda', 7, '67890867987', '666mfadsdwqe21', 'c20ad4d76fe97759aa27a0c99bff6710', 1);
+(112, 'ujyhtgrfedewdqef', 'uytredwa3qwds', 'kiujyhtgdaqweda', 7, '67890867987', '666mfadsdwqe21', 'c20ad4d76fe97759aa27a0c99bff6710', 1),
+(113, ' NEW NEW W', 'ODHAIJDBAJBAUF', 'ALKFALIFAVIUFVA', 5, '43256787654', '45RDFBCVHTY5NYE', 'e615c82aba461681ade82da2da38004a', 1);
 
 -- --------------------------------------------------------
 
@@ -962,7 +969,8 @@ INSERT INTO `user_activity` (`id`, `studentID`, `activity_name`, `activity_date`
 (24, 2147483647, 'User Signup', '2025-04-17 22:48:12', 'New student account created'),
 (25, 2147483647, 'User Signup', '2025-04-18 22:13:45', 'New student account created'),
 (26, 0, 'User Signup', '2025-04-19 00:29:25', 'New student account created'),
-(27, 2147483647, 'User Signup', '2025-04-19 14:38:30', 'New student account created');
+(27, 2147483647, 'User Signup', '2025-04-19 14:38:30', 'New student account created'),
+(28, 2147483647, 'User Signup', '2025-04-19 17:40:20', 'New student account created');
 
 -- --------------------------------------------------------
 
@@ -1060,19 +1068,19 @@ ALTER TABLE `instructorstbl`
 -- AUTO_INCREMENT for table `sectiontbls`
 --
 ALTER TABLE `sectiontbls`
-  MODIFY `sectionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1411;
+  MODIFY `sectionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2292;
 
 --
 -- AUTO_INCREMENT for table `studentratingstbl`
 --
 ALTER TABLE `studentratingstbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=562;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=567;
 
 --
 -- AUTO_INCREMENT for table `studentstbl`
 --
 ALTER TABLE `studentstbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1084,7 +1092,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_activity`
 --
 ALTER TABLE `user_activity`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

@@ -2,12 +2,12 @@
 session_start();
 include ("connect.php");
 
-
+// Fetch section options for sign-up dropdown
 $query = "SELECT sectionId, sectionName FROM sectiontbls";
 $result = $conn->query($query);
 
-
-if(isset($_POST['signUp'])){
+// Sign-up handler
+if (isset($_POST['signUp'])) {
     $firstName = $_POST['firstName'];
     $middleName = $_POST['middleName'];
     $surname = $_POST['surname'];
@@ -17,16 +17,15 @@ if(isset($_POST['signUp'])){
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
 
-    if($password == $confirmPassword){
+    if ($password == $confirmPassword) {
         $checkUsername = "SELECT * FROM studentstbl WHERE username='$username'";
         $result = $conn->query($checkUsername);
-        if($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             echo "<script>alert('Username already exists! Try again!');</script>";
         } else {
-            // Hash the password using MD5 (Note: MD5 is not recommended for security)
+            // Hash the password using MD5
             $password = md5($password);
-            
-            // Insert the user data with the MD5 hashed password
+
             $insertQuery = "INSERT INTO studentstbl (firstName, middleName, surname, sectionId, studentId, username, password, evalStatus)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($insertQuery);
@@ -35,7 +34,7 @@ if(isset($_POST['signUp'])){
             } else {
                 $evalStatus = 0;
                 $stmt->bind_param("sssssssi", $firstName, $middleName, $surname, $section, $studentID, $username, $password, $evalStatus);
-                if($stmt->execute()){
+                if ($stmt->execute()) {
                     insertActivity($studentID, 'User Signup', 'New student account created');
                     echo "Signup successful! Redirecting to index.php...";
                     header("location: index.php");
@@ -50,52 +49,8 @@ if(isset($_POST['signUp'])){
     }
 }
 
-if(isset($_POST['login'])){
-    $username=$_POST['username'];
-    $password=$_POST['password'];
-    $password=md5($password);
 
-
-    // Check if user is a regular user
-    $sql="SELECT * FROM studentstbl WHERE username='$username' AND password='$password'";
-    $result=$conn->query($sql);
-    if($result->num_rows > 0){
-        session_start();
-        $row=$result->fetch_assoc();
-        $_SESSION['username']=$row['username'];
-        $_SESSION['role']='studenstbl';
-        header("location: studentDashboard.php");
-        exit();
-    }
-    else{
-        echo "<script>alert('Username or password is incorrect!');</script>";
-    }
-}
-/*
-if(isset($_POST['login'])){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Check if user is a regular user
-    $sql = "SELECT studentID, section, username, password FROM studentstbl WHERE username='$username'";
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        $row = $result->fetch_assoc();
-        if(password_verify($password, $row['password'])){
-            session_start();
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['studentID'] = $row['studentID'];
-            $_SESSION['section'] = $row['section'];
-
-            header("location: studentDashboard.php");
-            exit;
-        } else {
-            echo "<script>alert('Invalid username or password!');</script>";
-        }
-    }
-}
-*/
-// Create a table to store the user's activity data
+// Table for user activity logs
 $conn->query("CREATE TABLE IF NOT EXISTS user_activity (
     id INT AUTO_INCREMENT PRIMARY KEY,
     studentID INT,
@@ -104,8 +59,8 @@ $conn->query("CREATE TABLE IF NOT EXISTS user_activity (
     activity_consequences TEXT
 )");
 
-// Function to insert user activity data
-function insertActivity($studentID, $activityName, $activityConsequences){
+// Activity logging function
+function insertActivity($studentID, $activityName, $activityConsequences) {
     global $conn;
     $insertActivityQuery = "INSERT INTO user_activity (studentID, activity_name, activity_date, activity_consequences)
     VALUES (?, ?, NOW(), ?)";
@@ -113,5 +68,4 @@ function insertActivity($studentID, $activityName, $activityConsequences){
     $stmt->bind_param("iss", $studentID, $activityName, $activityConsequences);
     $stmt->execute();
 }
-
 ?>
