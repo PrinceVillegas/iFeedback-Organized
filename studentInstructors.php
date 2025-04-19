@@ -5,19 +5,34 @@
 
     $username = $_SESSION['username'];
 
-    $query = "SELECT * FROM studentstbl WHERE username = '$username'";
-    $result = $conn->query($query);
+// Get student data
+$query = "SELECT * FROM studentstbl WHERE username = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
+// Now get sectionName using sectionId
+$sectionName = "Unknown Section"; // default
+
+if ($sectionId !== null) {
+    $stmt = $conn->prepare("SELECT sectionName FROM sectiontbls WHERE sectionId = ?");
+    
+    if ($stmt) {
+        $stmt->bind_param("i", $sectionId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            $sectionRow = $result->fetch_assoc();
+            $sectionName = $sectionRow['sectionName'];
+        }
     } else {
-        echo "No data found";
+        // Debug output if query failed
+        echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
     }
+}
 
-    if(isset($_SESSION['username'])){
-        $username = $_SESSION['username'];
-        $query=mysqli_query($conn, "SELECT studentstbl.* FROM `studentstbl` WHERE studentstbl.username='$username'");
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,8 +56,8 @@
                 </div>
                 <div class="d-inline justify-content-center text-center" id="studentInfo">
                     <p id="studentName"><?php echo $row['firstName'];?> <?php echo $row['surname']; ?></p>
-                    <p id="studentSection"><?php echo $row['section']; ?></p>
-                </div>
+                    <p id="studentSection"><?php echo htmlspecialchars($sectionName); ?></p>
+                    </div>
                 <div class="justify-content-center">
                     <hr class="hidden-hr">
                 </div>

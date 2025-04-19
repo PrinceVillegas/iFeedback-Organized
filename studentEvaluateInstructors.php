@@ -10,21 +10,35 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 
-// Fetch the logged-in student's data
+// Get student data
 $query = "SELECT * FROM studentstbl WHERE username = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if ($result->num_rows === 0) {
-    echo "No student data found.";
-    exit();
-}
+$sectionName = "Unknown Section"; // default fallback
 
-$student = $result->fetch_assoc();
-$studentId = $student['studentId'];
-$studentSectionId = $student['sectionId'];
+if ($result->num_rows > 0) {
+    $student = $result->fetch_assoc();
+    $studentId = $student['studentId'];
+    $studentSectionId = $student['sectionId'];
+
+    // Get section name using sectionId
+    $sectionStmt = $conn->prepare("SELECT sectionName FROM sectiontbls WHERE sectionId = ?");
+    if ($sectionStmt) {
+        $sectionStmt->bind_param("i", $studentSectionId);
+        $sectionStmt->execute();
+        $sectionResult = $sectionStmt->get_result();
+        if ($sectionResult && $sectionResult->num_rows > 0) {
+            $sectionRow = $sectionResult->fetch_assoc();
+            $sectionName = $sectionRow['sectionName'];
+        }
+    }
+} else {
+    echo "No data found";
+    exit;
+}
 
 // Fetch instructors assigned to this student's section
 $instructorStmt = $conn->prepare("
@@ -59,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['instructorId'])) {
     header("Location: studentFeedback.php?instructorId=$instructorId");
     exit;
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,8 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['instructorId'])) {
                 </div>
                 <div class="d-inline justify-content-center text-center" id="studentInfo">
                     <p id="studentName"><?php echo $student['firstName'] . ' ' . $student['surname']; ?></p>
-                    <p id="studentSection"><?php echo $student['section']; ?></p>
-                </div>
+                    <p id="studentSection"><?php echo htmlspecialchars($sectionName); ?></p>
+                    </div>
                 <div class="justify-content-center">
                     <hr class="hidden-hr">
                 </div>

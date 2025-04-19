@@ -26,6 +26,22 @@ if (!$student) {
 $_SESSION['studentID'] = $student['studentId'];
 $_SESSION['sectionId'] = $student['sectionId'];
 
+// Extract student info
+$studentFirstName = $student['firstName'];
+$studentLastName = $student['surname'];
+$sectionId = $student['sectionId'];
+
+// Fetch section name
+$sectionName = 'Unknown';
+$sectionQuery = $conn->prepare("SELECT sectionName FROM sectiontbls WHERE sectionId = ?");
+$sectionQuery->bind_param("i", $sectionId);
+$sectionQuery->execute();
+$sectionResult = $sectionQuery->get_result();
+if ($sectionResult && $sectionResult->num_rows > 0) {
+    $sectionRow = $sectionResult->fetch_assoc();
+    $sectionName = $sectionRow['sectionName'];
+}
+
 // Get instructorId from query parameter
 $instructorId = isset($_GET['instructorId']) ? (int)$_GET['instructorId'] : null;
 
@@ -52,7 +68,6 @@ if ($instructorId) {
 $token = bin2hex(random_bytes(16));
 $_SESSION['ratingToken'] = $token;
 ?>
-
 
 
 <!DOCTYPE html>
@@ -87,8 +102,9 @@ $_SESSION['ratingToken'] = $token;
                     <img src="assets/svg/Student Avatar.svg" alt="">
                 </div>
                 <div class="d-inline justify-content-center text-center" id="studentInfo">
-                    <p id="studentName"><?php echo $row['firstName'];?> <?php echo $row['surname']; ?></p>
-                    <p id="studentSection"><?php echo $row['section']; ?></p>
+                <p id="studentName"><?php echo htmlspecialchars($studentFirstName); ?> <?php echo htmlspecialchars($studentLastName); ?></p>
+                <p id="studentSection"><?php echo htmlspecialchars($sectionName); ?></p>
+
                 </div>
                 <div class="justify-content-center">
                     <hr class="hidden-hr">

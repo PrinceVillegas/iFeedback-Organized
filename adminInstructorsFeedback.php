@@ -16,33 +16,43 @@ if (isset($_SESSION['last_submission'])) {
   unset($_SESSION['last_submission']);
 }
 
-// Prepare the SQL statement with JOIN to get instructor name
-$stmt = $conn->prepare("
-  SELECT r.*, i.instructorFullName 
-  FROM ratingstbl r
-  JOIN instructorstbl i ON r.instructorID = i.instructorID
-");
-
-if ($stmt === false) {
-  echo "Error preparing SQL statement: " . $conn->error;
-  exit();
+// Fetch instructors for dropdown
+$instructors = [];
+$instStmt = $conn->prepare("SELECT instructorID, instructorFullName FROM instructorstbl");
+$instStmt->execute();
+$instResult = $instStmt->get_result();
+while ($row = $instResult->fetch_assoc()) {
+  $instructors[] = $row;
 }
 
-$stmt->execute();
-$result = $stmt->get_result();
+// Get selected instructor
+$selectedInstructorID = isset($_GET['instructor']) ? $_GET['instructor'] : null;
 
-if ($result === false) {
-  echo "Error executing SQL statement: " . $conn->error;
-  exit();
+// Prepare query (filter if instructor selected)
+if ($selectedInstructorID) {
+  $stmt = $conn->prepare("
+    SELECT r.*, i.instructorFullName 
+    FROM studentratingstbl r
+    JOIN instructorstbl i ON r.instructorID = i.instructorID
+    WHERE r.instructorID = ?
+  ");
+  $stmt->bind_param("i", $selectedInstructorID);
+} else {
+  $stmt = null;  // No query yet
+}
+
+$result = null;
+if ($stmt) {
+  $stmt->execute();
+  $result = $stmt->get_result();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8w">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Admin | Instructor Feedbacks</title>
+  <meta charset="UTF-8">
+  <title>Admin | Instructor Feedbacks</title>
   <style>
     table, th, td {
       border: 1px solid black;
@@ -53,11 +63,31 @@ if ($result === false) {
       width: 100%;
       margin-top: 20px;
     }
+    form {
+      margin-bottom: 20px;
+    }
+    #ratingsTable {
+      display: <?= $selectedInstructorID ? 'table' : 'none' ?>;
+    }
   </style>
 </head>
 <body>
   <h2>Instructor Ratings</h2>
-  <table class="table border">
+
+  <form method="GET" action="">
+    <label for="instructor">Select Instructor:</label>
+    <select name="instructor" id="instructor">
+      <option value="">-- Select Instructor --</option>
+      <?php foreach ($instructors as $instructor): ?>
+        <option value="<?= $instructor['instructorID'] ?>" <?= $selectedInstructorID == $instructor['instructorID'] ? 'selected' : '' ?>>
+          <?= htmlspecialchars($instructor['instructorFullName']) ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+    <button type="submit">Show</button>
+  </form>
+
+  <table id="ratingsTable">
     <tr>
       <th>Rating ID</th>
       <th>Instructor</th>
@@ -67,7 +97,7 @@ if ($result === false) {
       <th>Free Comment</th>
     </tr>
     <?php
-    if ($result) {
+    if ($result && $result->num_rows > 0) {
       while ($record = $result->fetch_assoc()) {
         $averageRating = (
           $record["rating1"] + $record["rating2"] + $record["rating3"] +
@@ -76,16 +106,16 @@ if ($result === false) {
         ) / 10;
 
         echo "<tr>";
-        echo "<td>" . $record["ratingID"] . "</td>";
+        echo "<td>" . $record["id"] . "</td>";
         echo "<td>" . htmlspecialchars($record["instructorFullName"]) . "</td>";
-        echo "<td>" . $record["studentID"] . "</td>";
-        echo "<td>" . $record["studentSection"] . "</td>";
+        echo "<td>" . htmlspecialchars($record["studentId"]) . "</td>";
+        echo "<td>" . htmlspecialchars($record["sectionId"]) . "</td>";
         echo "<td>" . number_format($averageRating, 2) . "</td>";
         echo "<td>" . htmlspecialchars($record["freeComment"]) . "</td>";
         echo "</tr>";
       }
-    } else {
-      echo "<tr><td colspan='6'>No results found.</td></tr>";
+    } elseif ($selectedInstructorID) {
+      echo "<tr><td colspan='6'>No ratings found for this instructor.</td></tr>";
     }
     ?>
   </table>
